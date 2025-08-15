@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bungie OAuth Redirect</title>
+</head>
+<body>
+  <h2>Bungie OAuth Redirect</h2>
+  <p id="status">Waiting for Bungie response...</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const error = params.get("error");
+
+    if (error) {
+      document.getElementById("status").innerText = `Error: ${error}`;
+    } else if (code) {
+      document.getElementById("status").innerText = "Authorization successful! Check console for your code.";
+      console.log("Bungie OAuth code:", code);
+      // Optional: Automatically copy to clipboard
+      navigator.clipboard.writeText(code).then(() => {
+        console.log("OAuth code copied to clipboard.");
+      });
+    } else {
+      document.getElementById("status").innerText = "No OAuth code found in URL.";
+    }
+  </script>
+</body>
+</html>
